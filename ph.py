@@ -46,8 +46,8 @@ def read_lines(serial: serial.Serial):
     except SerialException as e:
         return "Error, " + e
 
-# reads salinity information from sensor on serial_port
-def read_salinity(serial_port):
+# reads ph information from sensor on serial_port
+def read_ph(serial_port):
     try:
         ser = serial.Serial(serial_port, 9600, timeout=0)
     except SerialException as e:
@@ -66,16 +66,17 @@ def read_salinity(serial_port):
         if lines[i][-1] == "\r":
             lines[i] = lines[i][:-1]      # strip carriage return
     
-    salinity = lines[0]
+    ph = lines[0]
     if lines[1] != "*OK":
-        return "Error, sensor error with status " + lines[1] + " Reported salinity: " + salinity
+        return "Error, sensor error with status " + lines[1] + " Reported pH " + ph
     else:
-        return salinity
+        return ph
     
+
 
 if __name__ == "__main__":
     port = "/dev/serial0"
-    salinity_info = read_salinity(port)
+    ph_info = read_ph(port)
 
-    print("Salinity", salinity_info)
+    print("PH", ph_info)
 
