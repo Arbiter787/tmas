@@ -37,7 +37,7 @@ def read_lines(serial: serial.Serial):
     lines = []
     try:
         while True:
-            line = read_line()
+            line = read_line(serial)
             if not line:
                 break
                 serial.flush_input()
@@ -59,8 +59,12 @@ def read_salinity(serial_port):
 
     time.sleep(1.3)
     lines = read_lines(ser)
+    if type(lines) == string:
+        return lines
     for i in range(len(lines)):
         lines[i] = lines[i].decode('utf-8')
+        if lines[i][-1] == "\r":
+            lines[i] = lines[i][:-1]      # strip carriage return
     
     salinity = lines[0]
     if lines[1] != "*OK":
@@ -71,8 +75,8 @@ def read_salinity(serial_port):
 
 
 if __name__ == "__main__":
-    port = "dev/serial0"
+    port = "/dev/serial0"
     salinity_info = read_salinity(port)
 
-    print("Salinity: ", salinity_info)
-        
+    print("Salinity", salinity_info)
+
