@@ -1,0 +1,78 @@
+#!/usr/bin/python
+
+# Made with heavy reference from the Atlas Scientific sample UART sensor code.
+
+import serial
+import sys
+import time
+import string
+from serial import SerialException
+
+# sends string command to sensor on serial. returns True if command was successfully sent.
+def send_command(serial: serial.Serial, command: string):
+    buf = command + "\r"    # add carriage return
+    try:
+        serial.write(buf.encode('utf-8'))
+        return True
+    except SerialException as e:
+        return "Error, " + e
+
+
+# reads a line from serial.
+def read_line(serial: serial.Serial):
+    lsl = len(b'\r')
+    line_buffer = []
+    while True:
+        next_char = serial.read(1)
+        if next_char == b'':
+            break
+        line_buffer.append(next_char)
+        if len(line_buffer) >= lsl and line_buffer[-lsl:] == [b'\r']:
+            break
+    return b''.join(line_buffer)
+
+
+# reads multiple lines from serial.
+def read_lines(serial: serial.Serial):
+    lines = []
+    try:
+        while True:
+            line = read_line()
+            if not line:
+                break
+                serial.flush_input()
+            lines.append(line)
+        return lines
+    except SerialException as e:
+        return "Error, " + e
+
+# reads salinity information from sensor on serial_port
+def read_salinity(serial_port):
+    try:
+        ser = serial.Serial(serial_port, 9600, timeout=0)
+    except SerialException as e:
+        return "Error, " + e
+    
+    cmd_result = send_command(ser, "R")
+    if cmd_result != True:
+        return cmd_result
+
+    time.sleep(1.3)
+    lines = read_lines(ser)
+    for i in range(len(lines)):
+        lines[i] = lines[i].decode('utf-8')
+    
+    salinity = lines[0]
+    if lines[1] != "*OK":
+        return "Error, sensor error with status " + lines[1] + " Reported salinity: " + salinity
+    else:
+        return salinity
+    
+
+
+if __name__ == "__main__":
+    port = "dev/serial0"
+    salinity_info = read_salinity(port)
+
+    print("Salinity: ", salinity_info)
+        
