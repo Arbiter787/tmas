@@ -61,6 +61,7 @@ def read_data(serial_port):
     if type(lines) == string:
         return lines
     for i in range(len(lines)):
+        print(lines[i])
         lines[i] = lines[i].decode('utf-8')
         if lines[i][-1] == "\r":
             lines[i] = lines[i][:-1]      # strip carriage return
