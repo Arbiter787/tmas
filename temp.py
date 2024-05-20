@@ -10,14 +10,18 @@ base_dir = '/sys/bus/w1/devices/'
 try:
 	device_folder = glob.glob(base_dir + '28*')[0]
 except:
-	print('')
+	print('Water_Temp -999')    # Error code 999 = Error finding device
 	quit()
 
 device_file = device_folder + '/w1_slave'
 
 # A function that reads the sensors data
 def read_temp_raw():
-	f = open(device_file, 'r') # Opens the temperature device file
+	try:
+		f = open(device_file, 'r') # Opens the temperature device file
+	except OSError:
+		print('Water_Temp -998')   # Error code 998 = Error opening device file
+		quit()
 	lines = f.readlines() # Returns the text
 	f.close()
 	return lines
@@ -44,7 +48,7 @@ def read():
 			temp_c = float(temp_string) / 1000.0
 			return temp_c
 	except:
-		print('')
+		print('Water_Temp -997')    # Error code 997: Error reading from device
 		quit()
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ def send_command(serial: serial.Serial, command: string):
         serial.write(buf.encode('utf-8'))
         return True
     except SerialException as e:
-        return "Error, " + e
+        return "-12"     # Error -12: error sending command to sensor
 
 
 # reads a line from serial.
@@ -43,14 +43,14 @@ def read_lines(serial: serial.Serial):
             lines.append(line)
         return lines
     except SerialException as e:
-        return "Error, " + e
+        return "-11"    # Error -11: error reading data from sensor
 
 # reads data from sensor on serial_port
 def read_data(serial_port):
     try:
         ser = serial.Serial(serial_port, 9600, timeout=0)
     except SerialException as e:
-        return "Error, " + e
+        return "-10"    # Error -10: error establishing serial connection with sensor
     
     cmd_result = send_command(ser, "R")
     if cmd_result != True:
@@ -67,6 +67,6 @@ def read_data(serial_port):
     
     data = lines[0]
     if lines[1] != "*OK":
-        return "Error, sensor error with status " + lines[1] + " Reported reading " + data
+        return "Sensor error with status " + lines[1] + " Reported reading " + data
     else:
         return data

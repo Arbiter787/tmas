@@ -24,7 +24,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 raw_adc = (chan0.value)
 
 if (raw_adc == 0) or (raw_adc < (0.75 * adc_min)) or (raw_adc > 60000):
-	print('')
+	print('Water_Level -999')     # Error code 999 = hardware error with sensor or ADC
 	quit()
 else:
 	if (raw_adc > adc_max):
