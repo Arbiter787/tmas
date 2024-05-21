@@ -39,7 +39,6 @@ def read_lines(serial: serial.Serial):
             line = read_line(serial)
             if not line:
                 break
-                serial.flush_input()
             lines.append(line)
         return lines
     except SerialException as e:
