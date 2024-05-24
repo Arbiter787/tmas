@@ -40,7 +40,7 @@ def load_calibration():
     neutral_voltage = float(neutral_voltage_line)
 
     acid_voltage_line = file.readline()
-    acid_voltage_line = acid_voltage_line.strip('neutralVoltage=')
+    acid_voltage_line = acid_voltage_line.strip('acidVoltage=')
     acid_voltage = float(acid_voltage_line)
 
     return neutral_voltage, acid_voltage
