@@ -74,7 +74,7 @@ if __name__ == "__main__":
         print("Enter 'r' to reset calibration to default.")
         command = input("Enter command: ")
         if command == 'c':
-            calibrate(chan1.voltage)
+            calibrate(chan1.voltage * 1000)
         elif command == 'r':
             reset()
         else:

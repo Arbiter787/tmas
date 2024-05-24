@@ -55,5 +55,5 @@ def read(voltage):
     return ph_value
 
 if __name__ == "__main__":
-    ph = read(chan1.voltage)
+    ph = read(chan1.voltage * 1000)
     print("PH", ph)
