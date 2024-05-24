@@ -1,9 +1,12 @@
-import time
+# Luke Myers
+# 5/23/2024
+# Uses information from the DF Robot PH sensor sample code, available here:
+# https://github.com/DFRobot/DFRobot_PH
+
 import busio
 import digitalio
 import board
 import adafruit_mcp3xxx.mcp3008 as MCP
-import sys
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
 adc_max = 43520
@@ -18,22 +21,39 @@ cs = digitalio.DigitalInOut(board.D22)
 # Create the mcp object
 mcp = MCP.MCP3008(spi, cs)
 
-# Create an analog input channel on pin 0
-chan0 = AnalogIn(mcp, MCP.P1)
+# Create an analog input channel on pin 1
+chan1 = AnalogIn(mcp, MCP.P1)
 
-raw_adc = (chan0.value)
+neutral_voltage = 1500.0
+acid_voltage = 2032.44
 
-if (raw_adc == 0) or (raw_adc < (0.75 * adc_min)) or (raw_adc > 60000):
-	print('Water_Level -999')     # Error code 999 = hardware error with sensor or ADC
-	quit()
-else:
-	if (raw_adc > adc_max):
-		raw_adc = adc_max
+# load calibration data from ph_calibration.txt
+def load_calibration():
+    try:
+        file = open("ph_calibration.txt", 'r')
+    except:
+        print("PH -999")   # Error -999 - error loading calibration
+        quit()
+    
+    neutral_voltage_line = file.readline()
+    neutral_voltage_line = neutral_voltage_line.strip('neutralVoltage=')
+    neutral_voltage = float(neutral_voltage_line)
 
-	percentage = 1 - ((raw_adc - adc_min) * 1) / (adc_max - adc_min)
+    acid_voltage_line = file.readline()
+    acid_voltage_line = acid_voltage_line.strip('neutralVoltage=')
+    acid_voltage = float(acid_voltage_line)
 
-	if (percentage < 0):
-		percentage = 0
+    return neutral_voltage, acid_voltage
 
-	print('PH', (1 + round(percentage * 4, 1)))
-	print('RAW ADC', raw_adc)
+# read voltage info
+def read(voltage):
+    neutral_voltage, acid_voltage = load_calibration()
+    slope = (7.0 - 4.0) / ((neutral_voltage - 1500.0) / 3.0 - (acid_voltage - 1500.00) / 3.0)
+    intercept = 7.0 - slope * (neutral_voltage - 1500.00) / 3.0
+    ph_value = slope * (voltage - 1500.00) / 3.0 + intercept
+    round(ph_value, 3)
+    return ph_value
+
+if __name__ == "__main__":
+    ph = read(chan1.voltage)
+    print("PH", ph)
