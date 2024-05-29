@@ -1,6 +1,6 @@
 # Luke Myers
 # 5/23/2024
-# Uses information from the DF Robot PH sensor sample code, available here:
+# Uses information from the DF Robot EC sensor sample code, available here:
 # https://github.com/DFRobot/DFRobot_PH
 
 import busio
