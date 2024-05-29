@@ -9,9 +9,6 @@ import board
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
-adc_max = 43520
-adc_min = 32700
-
 # Create the spi bus
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 
@@ -51,7 +48,7 @@ def read(voltage):
     slope = (7.0 - 4.0) / ((neutral_voltage - 1500.0) / 3.0 - (acid_voltage - 1500.00) / 3.0)
     intercept = 7.0 - slope * (neutral_voltage - 1500.00) / 3.0
     ph_value = slope * (voltage - 1500.00) / 3.0 + intercept
-    round(ph_value, 3)
+    ph_value = round(ph_value, 3)
     return ph_value
 
 if __name__ == "__main__":
