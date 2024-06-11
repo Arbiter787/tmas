@@ -64,7 +64,7 @@ def read(voltage, temperature):
 if __name__ == "__main__":
 
     temp_dir = '/sys/bus/w1/devices/'
-    temp_folder = temp.find_device(dir)
+    temp_folder = temp.find_device(temp_dir)
     temp_file = temp_folder + '/w1_slave'
 
     # temperature compensation
