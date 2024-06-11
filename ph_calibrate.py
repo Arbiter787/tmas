@@ -33,17 +33,19 @@ def calibrate(voltage):
 
     if voltage > 1322 and voltage < 1678:
         print("7.0 pH buffer solution detected")
-        lines = file.readlines()
-        lines[0] = 'neutralVoltage=' + str(voltage) + '\n'
+        file.write("neutralVoltage=" + str(voltage) + '\n')
+        #lines = file.readlines()
+        #lines[0] = 'neutralVoltage=' + str(voltage) + '\n'
         
-        file.writelines(lines)
+        #file.writelines(lines)
         print("pH 7.0 calibration complete")
     elif voltage > 1854 and voltage < 2210:
         print("4.0 pH buffer solution detected")
-        lines = file.readlines()
-        lines[1] = 'acidVoltage=' + str(voltage) + '\n'
+        file.write("acidVoltage=" + str(voltage))
+        #lines = file.readlines()
+        #lines[1] = 'acidVoltage=' + str(voltage) + '\n'
         
-        file.writelines(lines)
+        #file.writelines(lines)
         print("pH 4.0 calibration complete")
     else:
         print("no calibration solution detected")
@@ -52,7 +54,7 @@ def calibrate(voltage):
 
 def reset():
     try:
-        file = open("ph_calibration.txt", 'w+')
+        file = open("ph_calibration.txt", 'w')
     except:
         print("Error opening ph_calibration.txt")
         quit()
@@ -60,9 +62,8 @@ def reset():
     neutralVoltage = 1500.0
     acidVoltage = 2032.44
 
-    lines = file.readlines()
-    lines[0] = 'neutralVoltage=' + str(neutralVoltage) + '\n'
-    lines[1] = 'acidVoltage=' + str(acidVoltage) + '\n'
+    file.write("neutralVoltage=" + str(neutralVoltage) + '\n')
+    file.write("acidVoltage=" + str(acidVoltage))
     file.close()
 
     print("Calibration reset to default.")
