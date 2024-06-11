@@ -84,8 +84,12 @@ if __name__ == "__main__":
         print("Enter 'r' to reset calibration to default.")
         command = input("Enter command: ")
         if command == 'c':
+            temp_dir = '/sys/bus/w1/devices/'
+            temp_folder = temp.find_device(temp_dir)
+            temp_file = temp_folder + '/w1_slave'
+
             # temperature compensation
-            temperature = temp.read()
+            temperature = temp.read(temp_file)
             if temperature == -997:
                 temperature = 25.0  # if sensor error, use default temp of 25C
 
