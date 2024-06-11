@@ -1,2 +1,2 @@
-kValueLow=1.0
-kValueHigh=1.0
+kvalueLow=1.0
+kvalueHigh=1.0

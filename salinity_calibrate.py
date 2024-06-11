@@ -69,8 +69,8 @@ def reset():
     high_k = 1.0
 
     lines = file.readlines()
-    lines[0] = 'kValueLow=' + str(low_k) + '\n'
-    lines[1] = 'kValueHigh=' + str(high_k) + '\n'
+    lines[0] = 'kvalueLow=' + str(low_k) + '\n'
+    lines[1] = 'kvalueHigh=' + str(high_k) + '\n'
     file.close()
 
     print("Calibration reset to default.")

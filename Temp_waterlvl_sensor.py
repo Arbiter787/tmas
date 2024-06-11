@@ -85,7 +85,7 @@ def read_water_level():
         return 1 + round(percentage * 4, 1)
 
 if __name__ == '__main__':
-    while True:
+    while True:   
         temp = read_temp()
         temperature_gauge.set(temp)
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")

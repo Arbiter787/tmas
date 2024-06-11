@@ -38,7 +38,7 @@ def load_calibration():
     low_k = float(low_k_line)
 
     high_k_line = file.readline()
-    high_k_line = high_k_line.strip('lvalueHigh=')
+    high_k_line = high_k_line.strip('kvalueHigh=')
     high_k = float(high_k_line)
 
     return low_k, high_k
