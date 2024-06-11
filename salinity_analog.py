@@ -63,8 +63,12 @@ def read(voltage, temperature):
 
 if __name__ == "__main__":
 
+    temp_dir = '/sys/bus/w1/devices/'
+    temp_folder = temp.find_device(dir)
+    temp_file = temp_folder + '/w1_slave'
+
     # temperature compensation
-    temperature = temp.read()
+    temperature = temp.read(temp_file)
     if temperature == -997:
         salinity = read(chan1.voltage * 1000, 25.0)  # if sensor error, use default temp of 25C
     else:
