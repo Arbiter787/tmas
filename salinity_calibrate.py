@@ -24,7 +24,7 @@ chan1 = AnalogIn(mcp, MCP.P1)
 
 def calibrate(voltage, temperature):
     try:
-        file = open("salinity_calibration.txt", 'r+')
+        file = open("salinity_calibration.txt", 'w')
     except:
         print("Error opening salinity_calibration.txt")
         quit()

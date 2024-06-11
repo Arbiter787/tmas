@@ -26,7 +26,7 @@ chan1 = AnalogIn(mcp, MCP.P1)
 
 def calibrate(voltage):
     try:
-        file = open("ph_calibration.txt", 'r+')
+        file = open("ph_calibration.txt", 'w')
     except:
         print("Error opening ph_calibration.txt")
         quit()
