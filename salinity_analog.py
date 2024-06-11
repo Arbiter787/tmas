@@ -28,7 +28,7 @@ high_k = 1.0
 # load calibration data from salinity_calibration.txt
 def load_calibration():
     try:
-        file = open("salinity_calibration.txt", 'r')
+        file = open("/home/pi/server/tmas/salinity_calibration.txt", 'r')
     except:
         print("Salinity -999")   # Error -999 - error loading calibration
         quit()

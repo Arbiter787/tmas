@@ -27,7 +27,7 @@ acid_voltage = 2032.44
 # load calibration data from ph_calibration.txt
 def load_calibration():
     try:
-        file = open("ph_calibration.txt", 'r')
+        file = open("/home/pi/server/tmas/ph_calibration.txt", 'r')
     except:
         print("PH -999")   # Error -999 - error loading calibration
         quit()
