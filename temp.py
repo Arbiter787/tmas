@@ -57,8 +57,8 @@ def read(device_file):
 		return(-997)    # Error code 997: Error reading from device
 
 if __name__ == '__main__':
-				dir = '/sys/bus/w1/devices/'
-				folder = find_device(dir)
-				file = folder + '/w1_slave'
-				temp = read(file)
-				print("Water_Temp {:.2f}".format(temp))
+	dir = '/sys/bus/w1/devices/'
+	folder = find_device(dir)
+	file = folder + '/w1_slave'
+	temp = read(file)
+	print("Water_Temp {:.2f}".format(temp))
