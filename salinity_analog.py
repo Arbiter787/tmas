@@ -56,10 +56,10 @@ def read(voltage, temperature):
     elif (temp_value < 2.0):
         k_value = low_k
     
-    value = ec * value
-    value = value / (1.0 + 0.0185 * (temperature - 25.0))
+    k_value = ec * k_value
+    k_value = k_value / (1.0 + 0.0185 * (temperature - 25.0))
 
-    return value
+    return k_value
 
 if __name__ == "__main__":
 
