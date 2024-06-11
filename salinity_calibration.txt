@@ -1,0 +1,2 @@
+kValueLow=1.0
+kValueHigh=1.0
