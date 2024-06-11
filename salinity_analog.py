@@ -30,7 +30,7 @@ def load_calibration():
     try:
         file = open("salinity_calibration.txt", 'r')
     except:
-        print("PH -999")   # Error -999 - error loading calibration
+        print("Salinity -999")   # Error -999 - error loading calibration
         quit()
     
     low_k_line = file.readline()
