@@ -24,7 +24,7 @@ chan1 = AnalogIn(mcp, MCP.P1)
 
 def calibrate(voltage, temperature):
     try:
-        file = open("salinity_calibration.txt", 'w')
+        file = open("salinity_calibration.txt", 'r+')
     except:
         print("Error opening salinity_calibration.txt")
         quit()
@@ -40,6 +40,7 @@ def calibrate(voltage, temperature):
         lines = file.readlines()
         lines[0] = 'kvalueLow=' + str(temp_k) + '\n'
         
+        file.seek(0)
         file.writelines(lines)
         print("1.413 ms/cm calibration complete")
     elif ec > 9.0 and ec < 16.8:
@@ -51,6 +52,7 @@ def calibrate(voltage, temperature):
         lines = file.readlines()
         lines[1] = 'kvalueHigh=' + str(temp_k) + '\n'
         
+        file.seek(0)
         file.writelines(lines)
         print("12.88 ms/cm calibration complete")
     else:
@@ -68,9 +70,8 @@ def reset():
     low_k = 1.0
     high_k = 1.0
 
-    lines = file.readlines()
-    lines[0] = 'kvalueLow=' + str(low_k) + '\n'
-    lines[1] = 'kvalueHigh=' + str(high_k) + '\n'
+    file.write("kvalueLow=" + str(low_k) + '\n')
+    file.write("kvalueHigh=" + str(high_k))
     file.close()
 
     print("Calibration reset to default.")

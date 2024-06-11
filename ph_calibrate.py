@@ -41,7 +41,6 @@ def calibrate(voltage):
         print("pH 7.0 calibration complete")
     elif voltage > 1854 and voltage < 2210:
         print("4.0 pH buffer solution detected")
-        file.write("acidVoltage=" + str(voltage))
         lines = file.readlines()
         lines[1] = 'acidVoltage=' + str(voltage) + '\n'
         
