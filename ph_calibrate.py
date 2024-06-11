@@ -26,26 +26,27 @@ chan1 = AnalogIn(mcp, MCP.P1)
 
 def calibrate(voltage):
     try:
-        file = open("ph_calibration.txt", 'w')
+        file = open("ph_calibration.txt", 'r+')
     except:
         print("Error opening ph_calibration.txt")
         quit()
 
     if voltage > 1322 and voltage < 1678:
         print("7.0 pH buffer solution detected")
-        file.write("neutralVoltage=" + str(voltage) + '\n')
-        #lines = file.readlines()
-        #lines[0] = 'neutralVoltage=' + str(voltage) + '\n'
+        lines = file.readlines()
+        lines[0] = 'neutralVoltage=' + str(voltage) + '\n'
         
-        #file.writelines(lines)
+        file.seek(0)
+        file.writelines(lines)
         print("pH 7.0 calibration complete")
     elif voltage > 1854 and voltage < 2210:
         print("4.0 pH buffer solution detected")
         file.write("acidVoltage=" + str(voltage))
-        #lines = file.readlines()
-        #lines[1] = 'acidVoltage=' + str(voltage) + '\n'
+        lines = file.readlines()
+        lines[1] = 'acidVoltage=' + str(voltage) + '\n'
         
-        #file.writelines(lines)
+        file.seek(0)
+        file.writelines(lines)
         print("pH 4.0 calibration complete")
     else:
         print("no calibration solution detected")
